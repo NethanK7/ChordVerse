@@ -23,6 +23,14 @@ class AudioEngine {
     this.reverbGain = null;
     this.dryGain = null;
     this.masterBus = null;
+
+    // Live VU Analyser & Master Audio Recorder
+    this.analyser = null;
+    this.recordDestination = null;
+    this.mediaRecorder = null;
+    this.recordedChunks = [];
+    this.isRecording = false;
+    this.recordStartTime = 0;
   }
 
   // Ensure AudioContext is initialized and master bus is connected
@@ -82,6 +90,98 @@ class AudioEngine {
 
     this.masterGain.connect(this.limiter);
     this.limiter.connect(ctx.destination);
+
+    // Live Visual Peak Analyser Node (For real-time DAW VU meters)
+    this.analyser = ctx.createAnalyser();
+    this.analyser.fftSize = 256;
+    this.analyser.smoothingTimeConstant = 0.6;
+    this.limiter.connect(this.analyser);
+
+    // Direct Web Audio Recording Stream Destination
+    try {
+      this.recordDestination = ctx.createMediaStreamDestination();
+      this.limiter.connect(this.recordDestination);
+    } catch {
+      // Fallback if MediaStreamDestination is not available
+      this.recordDestination = null;
+    }
+  }
+
+  // Get live audio peak amplitude (0.0 to 1.0)
+  getPeakLevel() {
+    if (!this.analyser || this.muted) return 0;
+    const dataArray = new Uint8Array(this.analyser.frequencyBinCount);
+    this.analyser.getByteTimeDomainData(dataArray);
+    let max = 0;
+    for (let i = 0; i < dataArray.length; i++) {
+      const val = Math.abs((dataArray[i] - 128) / 128);
+      if (val > max) max = val;
+    }
+    return Math.min(1, max * 1.5);
+  }
+
+  // Start direct digital audio mixdown recording
+  startRecording() {
+    this.init();
+    if (!this.recordDestination) return false;
+
+    try {
+      this.recordedChunks = [];
+      const mimeTypes = ['audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus'];
+      let selectedMime = '';
+      for (const mime of mimeTypes) {
+        if (typeof MediaRecorder !== 'undefined' && MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(mime)) {
+          selectedMime = mime;
+          break;
+        }
+      }
+
+      const options = selectedMime ? { mimeType: selectedMime, audioBitsPerSecond: 192000 } : {};
+      this.mediaRecorder = new MediaRecorder(this.recordDestination.stream, options);
+
+      this.mediaRecorder.ondataavailable = (e) => {
+        if (e.data && e.data.size > 0) {
+          this.recordedChunks.push(e.data);
+        }
+      };
+
+      this.mediaRecorder.start(100);
+      this.isRecording = true;
+      this.recordStartTime = Date.now();
+      return true;
+    } catch (err) {
+      console.warn('MediaRecorder start failed:', err);
+      return false;
+    }
+  }
+
+  // Stop recording and return { blob, url, duration, timestamp }
+  stopRecording() {
+    return new Promise((resolve) => {
+      if (!this.mediaRecorder || this.mediaRecorder.state === 'inactive') {
+        this.isRecording = false;
+        resolve(null);
+        return;
+      }
+
+      this.mediaRecorder.onstop = () => {
+        this.isRecording = false;
+        const durationSeconds = (Date.now() - this.recordStartTime) / 1000;
+        const mimeType = this.mediaRecorder.mimeType || 'audio/webm';
+        const blob = new Blob(this.recordedChunks, { type: mimeType });
+        const url = URL.createObjectURL(blob);
+        this.recordedChunks = [];
+        resolve({
+          blob,
+          url,
+          duration: Math.max(0.1, durationSeconds),
+          mimeType,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+        });
+      };
+
+      this.mediaRecorder.stop();
+    });
   }
 
   // Synthesize realistic stereo acoustic studio room impulse response
@@ -180,6 +280,73 @@ class AudioEngine {
     const semitonesFromC0 = (octave * 12) + (noteOffsets[note.toUpperCase()] ?? 0);
     const semitonesFromA4 = semitonesFromC0 - 57;
     return 440 * Math.pow(2, semitonesFromA4 / 12);
+  }
+
+  // Distortion curve generator for analog warmth
+  createDistortionCurve(amount = 15) {
+    const k = amount;
+    const n_samples = 44100;
+    const curve = new Float32Array(n_samples);
+    const deg = Math.PI / 180;
+    for (let i = 0; i < n_samples; ++i) {
+      const x = (i * 2) / n_samples - 1;
+      curve[i] = ((3 + k) * x * 20 * deg) / (Math.PI + k * Math.abs(x));
+    }
+    return curve;
+  }
+
+  // -------------------------------------------------------------
+  // ANALOG SUB & SYNTH BASS (Logic / Ableton style Moog / 808 Bass)
+  // -------------------------------------------------------------
+  playBass(noteWithOctave = 'C2', duration = 0.8, startTimeOffset = 0, velocity = 0.88, tone = 'sub') {
+    if (this.muted) return;
+    const ctx = this.init();
+    const dest = this.getDestination();
+    const startTime = ctx.currentTime + Math.max(0, startTimeOffset);
+    const freq = typeof noteWithOctave === 'number' ? noteWithOctave : this.getFrequency(noteWithOctave);
+    if (!freq || isNaN(freq)) return;
+
+    // Sub oscillator (Sine fundamental)
+    const subOsc = ctx.createOscillator();
+    subOsc.type = 'sine';
+    subOsc.frequency.setValueAtTime(freq, startTime);
+
+    // Body oscillator (Triangle or Sawtooth)
+    const bodyOsc = ctx.createOscillator();
+    bodyOsc.type = tone === 'sub' ? 'triangle' : 'sawtooth';
+    bodyOsc.frequency.setValueAtTime(freq, startTime);
+    bodyOsc.detune.setValueAtTime(tone === 'sub' ? 0 : 4, startTime);
+
+    // Resonant lowpass filter
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    const cutoff = tone === 'sub' ? Math.min(260, freq * 2.8) : Math.min(680, freq * 5);
+    filter.frequency.setValueAtTime(cutoff * 2.5, startTime);
+    filter.frequency.exponentialRampToValueAtTime(cutoff, startTime + 0.14);
+    filter.Q.setValueAtTime(tone === 'sub' ? 2 : 4.5, startTime);
+
+    // Bass Amp Envelope
+    const bassGain = ctx.createGain();
+    const baseAmp = velocity * 0.92;
+    bassGain.gain.setValueAtTime(0.0001, startTime);
+    bassGain.gain.exponentialRampToValueAtTime(baseAmp, startTime + 0.015);
+    bassGain.gain.exponentialRampToValueAtTime(baseAmp * 0.72, startTime + 0.22);
+    bassGain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+
+    // Warmth wave shaper
+    const shaper = ctx.createWaveShaper();
+    shaper.curve = this.createDistortionCurve(10);
+
+    subOsc.connect(filter);
+    bodyOsc.connect(filter);
+    filter.connect(shaper);
+    shaper.connect(bassGain);
+    bassGain.connect(dest);
+
+    subOsc.start(startTime);
+    bodyOsc.start(startTime);
+    subOsc.stop(startTime + duration + 0.05);
+    bodyOsc.stop(startTime + duration + 0.05);
   }
 
   // -------------------------------------------------------------
