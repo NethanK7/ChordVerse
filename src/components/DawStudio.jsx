@@ -31,6 +31,7 @@ export default function DawStudio({
   const [isMasterPlaying, setIsMasterPlaying] = useState(false);
   const [reverbAmount, setReverbAmount] = useState(25); // percentage
   const [activeChordJam, setActiveChordJam] = useState(null);
+  const [selectedChordIndex, setSelectedChordIndex] = useState(0);
 
   // Synced 16-step playhead for DAW Console
   const [dawStep, setDawStep] = useState(0);
