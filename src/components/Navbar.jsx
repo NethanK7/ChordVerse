@@ -11,18 +11,24 @@ import {
   Sparkles,
   Sliders,
   Clock,
-  Zap
+  Zap,
+  GraduationCap
 } from 'lucide-react';
 import { AVAILABLE_KEYS } from '../utils/musicTheory';
 import { audio } from '../utils/audio';
 
 export default function Navbar({ 
+  mainMode = 'learning',
+  setMainMode,
+  learningTab = 'theory',
+  setLearningTab,
+  dawView = 'console',
+  setDawView,
   currentKey, 
   setCurrentKey, 
-  activeTab, 
-  setActiveTab,
   isMuted,
-  setIsMuted
+  setIsMuted,
+  onNavigate
 }) {
   const toggleMute = () => {
     const next = !isMuted;
@@ -34,22 +40,40 @@ export default function Navbar({
     }
   };
 
-  const navItems = [
+  const learningNavItems = [
     { id: 'theory', label: '1-7 Concept', icon: BookOpen },
     { id: 'chords', label: 'The 7 Chords', icon: Layers },
-    { id: 'guitar', label: 'Guitar Strums', icon: Zap },
-    { id: 'beats', label: 'Beat Maker', icon: Disc3 },
-    { id: 'metronome', label: 'Metronome', icon: Clock },
     { id: 'families', label: 'Chord Families', icon: Compass },
     { id: 'progressions', label: 'Progression Lab', icon: Sliders },
     { id: 'quiz', label: 'Mastery Quiz', icon: HelpCircle, badge: 'Quiz' }
   ];
 
+  const dawNavItems = [
+    { id: 'console', label: 'All-in-One Console', icon: Layers },
+    { id: 'beats', label: 'Beat Maker', icon: Disc3 },
+    { id: 'guitar', label: 'Guitar Strummer', icon: Zap },
+    { id: 'metronome', label: 'Metronome', icon: Clock }
+  ];
+
+  const handleBrandClick = () => {
+    if (setMainMode) setMainMode('learning');
+    if (setLearningTab) setLearningTab('theory');
+    if (onNavigate) onNavigate('theory');
+  };
+
+  const handleModeSwitch = (mode) => {
+    if (setMainMode) setMainMode(mode);
+    if (onNavigate) {
+      if (mode === 'learning') onNavigate(learningTab || 'theory');
+      if (mode === 'daw') onNavigate(dawView || 'console');
+    }
+  };
+
   return (
     <header className="navbar">
       <div className="navbar-container">
         {/* Brand / Logo */}
-        <div className="brand" onClick={() => setActiveTab('theory')}>
+        <div className="brand" onClick={handleBrandClick}>
           <div className="brand-icon-box">
             <Music className="brand-icon" />
             <Sparkles className="brand-sparkle" />
@@ -60,24 +84,30 @@ export default function Navbar({
           </div>
         </div>
 
-        {/* Navigation Tabs */}
-        <nav className="nav-tabs" aria-label="Main Navigation">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = activeTab === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => setActiveTab(item.id)}
-                className={`nav-tab-btn ${isActive ? 'active' : ''}`}
-              >
-                <Icon size={17} />
-                <span>{item.label}</span>
-                {item.badge && <span className="nav-tab-badge">{item.badge}</span>}
-              </button>
-            );
-          })}
-        </nav>
+        {/* Primary Area Switcher (Learning Academy vs DAW Studio) */}
+        <div className="primary-area-toggle" role="tablist" aria-label="Workspaces">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={mainMode === 'learning'}
+            onClick={() => handleModeSwitch('learning')}
+            className={`area-toggle-btn ${mainMode === 'learning' ? 'active learning' : ''}`}
+          >
+            <GraduationCap size={16} />
+            <span>Learning Academy</span>
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={mainMode === 'daw'}
+            onClick={() => handleModeSwitch('daw')}
+            className={`area-toggle-btn ${mainMode === 'daw' ? 'active daw' : ''}`}
+          >
+            <Sliders size={16} />
+            <span>DAW Studio</span>
+            <span className="area-pro-pill">PRO</span>
+          </button>
+        </div>
 
         {/* Controls: Key Picker & Audio Mute */}
         <div className="nav-controls">
@@ -109,6 +139,57 @@ export default function Navbar({
           >
             {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
           </button>
+        </div>
+      </div>
+
+      {/* Sub-Navigation Row: Dynamically matches the active Area */}
+      <div className="sub-navbar-container">
+        <nav className="nav-tabs" aria-label="Sub Navigation">
+          {mainMode === 'learning' ? (
+            learningNavItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = learningTab === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    if (setLearningTab) setLearningTab(item.id);
+                    if (onNavigate) onNavigate(item.id);
+                  }}
+                  className={`nav-tab-btn ${isActive ? 'active' : ''}`}
+                >
+                  <Icon size={16} />
+                  <span>{item.label}</span>
+                  {item.badge && <span className="nav-tab-badge">{item.badge}</span>}
+                </button>
+              );
+            })
+          ) : (
+            dawNavItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = dawView === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    if (setDawView) setDawView(item.id);
+                    if (onNavigate) onNavigate(item.id);
+                  }}
+                  className={`nav-tab-btn daw-subtab ${isActive ? 'active' : ''}`}
+                >
+                  <Icon size={16} />
+                  <span>{item.label}</span>
+                </button>
+              );
+            })
+          )}
+        </nav>
+        <div className="active-area-indicator">
+          {mainMode === 'learning' ? (
+            <span className="indicator-chip learning-chip">Theory Mode</span>
+          ) : (
+            <span className="indicator-chip daw-chip">DAW Mode (Polyphonic)</span>
+          )}
         </div>
       </div>
     </header>
