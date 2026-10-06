@@ -220,95 +220,96 @@ export default function DawStudio({
         </div>
       </div>
 
-      {/* Global DAW Master Transport Bar */}
-      <div className="daw-transport-bar">
-        {/* Play/Stop Transport */}
-        <div className="transport-play-group">
-          <button
-            onClick={toggleMasterTransport}
-            className={`daw-master-play-btn ${isMasterPlaying ? 'playing' : ''}`}
-          >
-            {isMasterPlaying ? (
-              <>
-                <Square size={18} fill="currentColor" /> Stop DAW
-              </>
-            ) : (
-              <>
-                <Play size={18} fill="currentColor" /> Play DAW Session
-              </>
-            )}
-          </button>
-
-          <div className="daw-time-display">
-            <span className="time-bar">BAR {Math.floor(dawStep / 4) + 1}</span>
-            <span className="time-divider">:</span>
-            <span className="time-step">{(dawStep % 4) + 1}</span>
-          </div>
-        </div>
-
-        {/* Master Tempo (BPM) */}
-        <div className="daw-tempo-box">
-          <div className="tempo-readout">
-            <span className="tempo-num">{masterBpm}</span>
-            <span className="tempo-label">BPM</span>
-          </div>
-          <input
-            type="range"
-            min="50"
-            max="180"
-            value={masterBpm}
-            onChange={(e) => setMasterBpm(parseInt(e.target.value, 10))}
-            className="daw-tempo-slider"
-          />
-        </div>
-
-        {/* Studio Reverb Space Control */}
-        <div className="daw-fx-box">
-          <div className="fx-label-row">
-            <Sparkles size={14} className="text-purple" />
-            <span>Studio Reverb: {reverbAmount}%</span>
-          </div>
-          <input
-            type="range"
-            min="0"
-            max="70"
-            value={reverbAmount}
-            onChange={(e) => handleReverbChange(parseInt(e.target.value, 10))}
-            className="daw-reverb-slider"
-          />
-        </div>
-
-        {/* Metronome Click Sync in DAW */}
-        <div className="daw-quick-toggles">
-          <button
-            onClick={() => setMetronomeClickInDaw(!metronomeClickInDaw)}
-            className={`daw-toggle-btn ${metronomeClickInDaw ? 'active' : ''}`}
-            title="Play woodblock metronome click during playback"
-          >
-            <Clock size={15} /> Metronome: {metronomeClickInDaw ? 'ON' : 'OFF'}
-          </button>
-
-          <button
-            onClick={() => setMuteDrums(!muteDrums)}
-            className={`daw-toggle-btn ${muteDrums ? 'muted' : ''}`}
-            title="Mute or unmute drums"
-          >
-            <Disc3 size={15} /> Drums: {muteDrums ? 'MUTED' : 'ON'}
-          </button>
-
-          <button
-            onClick={() => setMuteGuitar(!muteGuitar)}
-            className={`daw-toggle-btn ${muteGuitar ? 'muted' : ''}`}
-            title="Mute or unmute acoustic guitar playback"
-          >
-            <Zap size={15} /> Guitar: {muteGuitar ? 'MUTED' : 'ON'}
-          </button>
-        </div>
-      </div>
-
       {/* VIEW 1: FULL DAW ALL-IN-ONE CONSOLE */}
       {dawView === 'console' && (
-        <div className="daw-console-layout">
+        <>
+          {/* Global DAW Master Transport Bar */}
+          <div className="daw-transport-bar">
+            {/* Play/Stop Transport */}
+            <div className="transport-play-group">
+              <button
+                onClick={toggleMasterTransport}
+                className={`daw-master-play-btn ${isMasterPlaying ? 'playing' : ''}`}
+              >
+                {isMasterPlaying ? (
+                  <>
+                    <Square size={18} fill="currentColor" /> Stop DAW
+                  </>
+                ) : (
+                  <>
+                    <Play size={18} fill="currentColor" /> Play DAW Session
+                  </>
+                )}
+              </button>
+
+              <div className="daw-time-display">
+                <span className="time-bar">BAR {Math.floor(dawStep / 4) + 1}</span>
+                <span className="time-divider">:</span>
+                <span className="time-step">{(dawStep % 4) + 1}</span>
+              </div>
+            </div>
+
+            {/* Master Tempo (BPM) */}
+            <div className="daw-tempo-box">
+              <div className="tempo-readout">
+                <span className="tempo-num">{masterBpm}</span>
+                <span className="tempo-label">BPM</span>
+              </div>
+              <input
+                type="range"
+                min="50"
+                max="180"
+                value={masterBpm}
+                onChange={(e) => setMasterBpm(parseInt(e.target.value, 10))}
+                className="daw-tempo-slider"
+              />
+            </div>
+
+            {/* Studio Reverb Space Control */}
+            <div className="daw-fx-box">
+              <div className="fx-label-row">
+                <Sparkles size={14} className="text-purple" />
+                <span>Studio Reverb: {reverbAmount}%</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="70"
+                value={reverbAmount}
+                onChange={(e) => handleReverbChange(parseInt(e.target.value, 10))}
+                className="daw-reverb-slider"
+              />
+            </div>
+
+            {/* Metronome Click Sync in DAW */}
+            <div className="daw-quick-toggles">
+              <button
+                onClick={() => setMetronomeClickInDaw(!metronomeClickInDaw)}
+                className={`daw-toggle-btn ${metronomeClickInDaw ? 'active' : ''}`}
+                title="Play woodblock metronome click during playback"
+              >
+                <Clock size={15} /> Metronome: {metronomeClickInDaw ? 'ON' : 'OFF'}
+              </button>
+
+              <button
+                onClick={() => setMuteDrums(!muteDrums)}
+                className={`daw-toggle-btn ${muteDrums ? 'muted' : ''}`}
+                title="Mute or unmute drums"
+              >
+                <Disc3 size={15} /> Drums: {muteDrums ? 'MUTED' : 'ON'}
+              </button>
+
+              <button
+                onClick={() => setMuteGuitar(!muteGuitar)}
+                className={`daw-toggle-btn ${muteGuitar ? 'muted' : ''}`}
+                title="Mute or unmute acoustic guitar playback"
+              >
+                <Zap size={15} /> Guitar: {muteGuitar ? 'MUTED' : 'ON'}
+              </button>
+            </div>
+          </div>
+
+          <div className="daw-console-layout">
           {/* Track Rack 1: 16-Step Beat Machine Track */}
           <div className="daw-track-card">
             <div className="track-card-header">
@@ -537,6 +538,28 @@ export default function DawStudio({
               </button>
             </div>
           </div>
+        </div>
+        </>
+      )}
+
+      {/* Sub-View Quick Banner when in expanded single-instrument views */}
+      {dawView !== 'console' && (
+        <div className="daw-subview-banner">
+          <div className="subview-breadcrumb">
+            <span className="breadcrumb-root" onClick={() => setDawView('console')}>DAW Studio</span>
+            <span className="breadcrumb-slash">/</span>
+            <span className="breadcrumb-current">
+              {dawView === 'beats' && 'Beat Maker & Groovebox (16-Step Polyphonic)'}
+              {dawView === 'guitar' && 'Acoustic Guitar Strummer & Harmonic Stage'}
+              {dawView === 'metronome' && 'Precision Clock & Metronome'}
+            </span>
+          </div>
+          <button
+            onClick={() => setDawView('console')}
+            className="return-to-console-btn"
+          >
+            <Layers size={14} /> Back to All-in-One Console View
+          </button>
         </div>
       )}
 

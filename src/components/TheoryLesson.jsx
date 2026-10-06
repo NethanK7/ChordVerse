@@ -9,7 +9,8 @@ import {
   HeartHandshake,
   Flame,
   Volume2,
-  Lightbulb
+  Lightbulb,
+  Sliders
 } from 'lucide-react';
 import { audio } from '../utils/audio';
 import { getScaleNotes, getChordsInKey } from '../utils/musicTheory';
@@ -46,6 +47,9 @@ export default function TheoryLesson({ currentKey, setActiveTab }) {
           </button>
           <button onClick={() => setActiveTab('chords')} className="secondary-glass-btn">
             Explore The 7 Chords <ArrowRight size={18} />
+          </button>
+          <button onClick={() => setActiveTab('daw')} className="hero-daw-pill-btn" title="Open DAW Studio Workstation">
+            <Sliders size={17} className="text-emerald" /> Produce in DAW Studio
           </button>
         </div>
       </section>
@@ -318,13 +322,18 @@ export default function TheoryLesson({ currentKey, setActiveTab }) {
         </div>
       </section>
 
-      {/* Bottom CTA to Chords Explorer */}
+      {/* Bottom CTA to Chords Explorer & DAW Studio */}
       <section className="theory-cta">
-        <h2>Ready to Hear and Play the 7 Chords?</h2>
-        <p>Interactive sounds, individual note breakdowns, and voicing controls await.</p>
-        <button onClick={() => setActiveTab('chords')} className="primary-glow-btn large">
-          Jump to The 7 Chords Explorer <ArrowRight size={20} />
-        </button>
+        <h2>Ready to Put Theory Into Practice?</h2>
+        <p>Interactive sounds, individual chord dissections, or jump straight into beat-making.</p>
+        <div className="theory-cta-buttons">
+          <button onClick={() => setActiveTab('chords')} className="primary-glow-btn large">
+            Jump to The 7 Chords Explorer <ArrowRight size={20} />
+          </button>
+          <button onClick={() => setActiveTab('daw')} className="secondary-glass-btn large daw-cta-accent">
+            <Sliders size={20} className="text-emerald" /> Produce in DAW Studio
+          </button>
+        </div>
       </section>
     </div>
   );

@@ -6,7 +6,8 @@ import {
   RotateCcw, 
   Flame, 
   ArrowRight, 
-  Trophy 
+  Trophy,
+  Sliders
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { QUIZ_QUESTIONS } from '../utils/musicTheory';
@@ -276,6 +277,9 @@ export default function QuizModule({ setActiveTab }) {
             </button>
             <button onClick={() => setActiveTab('theory')} className="secondary-glass-btn">
               Review Theory Notes
+            </button>
+            <button onClick={() => setActiveTab('daw')} className="secondary-glass-btn daw-results-accent">
+              <Sliders size={18} className="text-emerald" /> Jam in DAW Studio
             </button>
           </div>
         </div>

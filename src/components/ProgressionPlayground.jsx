@@ -5,12 +5,13 @@ import {
   RotateCcw, 
   Plus, 
   Trash2, 
-  Music
+  Music,
+  Sliders
 } from 'lucide-react';
 import { audio } from '../utils/audio';
 import { FAMOUS_PROGRESSIONS, getChordsInKey } from '../utils/musicTheory';
 
-export default function ProgressionPlayground({ currentKey }) {
+export default function ProgressionPlayground({ currentKey, setActiveTab }) {
   const chords = getChordsInKey(currentKey);
   const [selectedPresetId, setSelectedPresetId] = useState('pop-axis');
   const [customProgression, setCustomProgression] = useState([1, 5, 6, 4]);
@@ -314,6 +315,17 @@ export default function ProgressionPlayground({ currentKey }) {
             </button>
           ))}
         </div>
+      </div>
+
+      {/* Bottom DAW Studio Bridge */}
+      <div className="progression-daw-bridge-banner">
+        <div className="bridge-text">
+          <h3>Bring Your Chords to Life in the DAW</h3>
+          <p>Arrange your progressions alongside the 16-step drum machine, acoustic guitar physical model, and studio room reverb.</p>
+        </div>
+        <button onClick={() => setActiveTab && setActiveTab('daw')} className="primary-glow-btn">
+          <Sliders size={18} /> Open in DAW Studio
+        </button>
       </div>
     </div>
   );
