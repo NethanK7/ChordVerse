@@ -7,8 +7,11 @@ import {
   HelpCircle, 
   Volume2, 
   VolumeX, 
-  Music,
-  Sparkles
+  Music, 
+  Sparkles,
+  Sliders,
+  Clock,
+  Zap
 } from 'lucide-react';
 import { AVAILABLE_KEYS } from '../utils/musicTheory';
 import { audio } from '../utils/audio';
@@ -27,7 +30,6 @@ export default function Navbar({
     audio.setMuted(next);
     if (!next) {
       audio.init();
-      // Play a soft test chime
       audio.playNote('C5', 0.4, 0, 0.5);
     }
   };
@@ -35,8 +37,11 @@ export default function Navbar({
   const navItems = [
     { id: 'theory', label: '1-7 Concept', icon: BookOpen },
     { id: 'chords', label: 'The 7 Chords', icon: Layers },
+    { id: 'guitar', label: 'Guitar Strums', icon: Zap },
+    { id: 'beats', label: 'Beat Maker', icon: Disc3 },
+    { id: 'metronome', label: 'Metronome', icon: Clock },
     { id: 'families', label: 'Chord Families', icon: Compass },
-    { id: 'progressions', label: 'Progression Lab', icon: Disc3 },
+    { id: 'progressions', label: 'Progression Lab', icon: Sliders },
     { id: 'quiz', label: 'Mastery Quiz', icon: HelpCircle, badge: 'Quiz' }
   ];
 
@@ -50,8 +55,8 @@ export default function Navbar({
             <Sparkles className="brand-sparkle" />
           </div>
           <div className="brand-text">
-            <span className="brand-title">Chord<span className="brand-accent">Verse</span></span>
-            <span className="brand-tagline">The 1–7 Number Code</span>
+            <span className="brand-title">Project <span className="brand-accent">Music</span></span>
+            <span className="brand-tagline">Studio & Theory Suite</span>
           </div>
         </div>
 
@@ -66,7 +71,7 @@ export default function Navbar({
                 onClick={() => setActiveTab(item.id)}
                 className={`nav-tab-btn ${isActive ? 'active' : ''}`}
               >
-                <Icon size={18} />
+                <Icon size={17} />
                 <span>{item.label}</span>
                 {item.badge && <span className="nav-tab-badge">{item.badge}</span>}
               </button>
@@ -84,7 +89,6 @@ export default function Navbar({
               onChange={(e) => {
                 setCurrentKey(e.target.value);
                 audio.init();
-                // Play root note of newly selected key
                 audio.playNote(`${e.target.value}4`, 0.6, 0, 0.7);
               }}
               className="key-select"

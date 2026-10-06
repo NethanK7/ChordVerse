@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { audio } from '../utils/audio';
-import { getNoteIndex, CHROMATIC_NOTES } from '../utils/musicTheory';
 
 // 2-Octave piano layout (C4 to B5)
 const PIANO_KEYS = [
@@ -33,7 +32,7 @@ const PIANO_KEYS = [
   { note: 'C', octave: 6, isBlack: false }
 ];
 
-export default function InteractivePiano({ activeNotes = [], currentKey = 'C', scaleNotes = [] }) {
+export default function InteractivePiano({ activeNotes = [], scaleNotes = [] }) {
   const [soundingKeys, setSoundingKeys] = useState(new Set());
 
   useEffect(() => {

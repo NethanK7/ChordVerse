@@ -1,7 +1,6 @@
 import React from 'react';
 import { 
   Play, 
-  HelpCircle, 
   Compass, 
   Sparkles, 
   ArrowRight, 
@@ -9,7 +8,8 @@ import {
   Zap, 
   HeartHandshake,
   Flame,
-  Volume2
+  Volume2,
+  Lightbulb
 } from 'lucide-react';
 import { audio } from '../utils/audio';
 import { getScaleNotes, getChordsInKey } from '../utils/musicTheory';
@@ -172,7 +172,7 @@ export default function TheoryLesson({ currentKey, setActiveTab }) {
             <span className="chip dim">7: diminished</span>
           </div>
           <p className="formula-mnemonic">
-            💡 <strong>Mnemonic Trick:</strong> 1, 4, 5 are always <strong>MAJOR</strong>. 2, 3, 6 are always <strong>MINOR</strong>. 7 is <strong>DIMINISHED</strong>.
+            <Lightbulb size={16} className="inline-icon text-amber" /> <strong>Mnemonic Trick:</strong> 1, 4, 5 are always <strong>MAJOR</strong>. 2, 3, 6 are always <strong>MINOR</strong>. 7 is <strong>DIMINISHED</strong>.
           </p>
         </div>
 
@@ -294,17 +294,23 @@ export default function TheoryLesson({ currentKey, setActiveTab }) {
             <span className="flow-label">HOME</span>
             <span className="flow-degree">1 (I)</span>
           </div>
-          <div className="flow-arrow">➡️ Leaves home ➡️</div>
+          <div className="flow-arrow">
+            <ArrowRight size={14} className="inline-icon" /> Leaves home <ArrowRight size={14} className="inline-icon" />
+          </div>
           <div className="flow-step subdom">
             <span className="flow-label">JOURNEY</span>
             <span className="flow-degree">4 (IV) / 2 (ii)</span>
           </div>
-          <div className="flow-arrow">➡️ Builds tension ➡️</div>
+          <div className="flow-arrow">
+            <ArrowRight size={14} className="inline-icon" /> Builds tension <ArrowRight size={14} className="inline-icon" />
+          </div>
           <div className="flow-step dom">
             <span className="flow-label">TENSION</span>
             <span className="flow-degree">5 (V) / 7 (vii°)</span>
           </div>
-          <div className="flow-arrow">➡️ Magnetic pull back ➡️</div>
+          <div className="flow-arrow">
+            <ArrowRight size={14} className="inline-icon" /> Magnetic pull back <ArrowRight size={14} className="inline-icon" />
+          </div>
           <div className="flow-step tonic">
             <span className="flow-label">RESOLVE</span>
             <span className="flow-degree">1 (I)</span>

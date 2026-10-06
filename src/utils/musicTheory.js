@@ -174,7 +174,7 @@ export const CHORD_FAMILIES = {
     romans: ['I', 'vi', 'iii'],
     color: '#10b981',
     description: 'Feels at rest. Provides grounded emotional resolution. Like sitting on your favorite sofa at home after a long journey.',
-    metaphor: 'Home Base 🏡'
+    metaphor: 'Home Base'
   },
   subdominant: {
     name: 'Subdominant Family',
@@ -183,7 +183,7 @@ export const CHORD_FAMILIES = {
     romans: ['IV', 'ii'],
     color: '#3b82f6',
     description: 'Moves away from home. Adds momentum, curiosity, and sets the stage for the big dramatic tension.',
-    metaphor: 'The Open Road 🚗'
+    metaphor: 'The Open Road'
   },
   dominant: {
     name: 'Dominant Family',
@@ -192,7 +192,7 @@ export const CHORD_FAMILIES = {
     romans: ['V', 'vii°'],
     color: '#f59e0b',
     description: 'High energy and musical suspense! It carries the "leading tone" that creates an irresistible urge to snap back to the Tonic (1).',
-    metaphor: 'The Rollercoaster Drop 🎢'
+    metaphor: 'The Rollercoaster Drop'
   }
 };
 
@@ -449,3 +449,144 @@ export const QUIZ_QUESTIONS = [
     explanation: 'Every other diatonic triad has a stable Perfect 5th (7 semitones). Chord 7 has a Diminished 5th (6 semitones), known historically as the "Devil\'s Interval" or tritone, creating immense tension!'
   }
 ];
+
+// Standard 6-String Guitar Tuning (Low E to High E)
+export const GUITAR_TUNING = [
+  { string: 6, note: 'E2', name: '6 (E)', gauge: 'Thick (0.053)' },
+  { string: 5, note: 'A2', name: '5 (A)', gauge: 'Heavy (0.042)' },
+  { string: 4, note: 'D3', name: '4 (D)', gauge: 'Medium (0.032)' },
+  { string: 3, note: 'G3', name: '3 (G)', gauge: 'Wound (0.024)' },
+  { string: 2, note: 'B3', name: '2 (B)', gauge: 'Plain (0.016)' },
+  { string: 1, note: 'E4', name: '1 (E)', gauge: 'Thin (0.012)' }
+];
+
+// Curated Guitar Chord Voicings Database
+export const GUITAR_CHORDS_DB = {
+  // Majors
+  'C': { frets: [-1, 3, 2, 0, 1, 0], fingers: ['x', '3', '2', '0', '1', '0'], notes: ['x', 'C3', 'E3', 'G3', 'C4', 'E4'], baseFret: 1 },
+  'C#': { frets: [-1, 4, 6, 6, 6, 4], fingers: ['x', '1', '2', '3', '4', '1'], notes: ['x', 'C#3', 'G#3', 'C#4', 'F4', 'G#4'], baseFret: 4 },
+  'Db': { frets: [-1, 4, 6, 6, 6, 4], fingers: ['x', '1', '2', '3', '4', '1'], notes: ['x', 'Db3', 'Ab3', 'Db4', 'F4', 'Ab4'], baseFret: 4 },
+  'D': { frets: [-1, -1, 0, 2, 3, 2], fingers: ['x', 'x', '0', '1', '3', '2'], notes: ['x', 'x', 'D3', 'A3', 'D4', 'F#4'], baseFret: 1 },
+  'D#': { frets: [-1, 6, 8, 8, 8, 6], fingers: ['x', '1', '2', '3', '4', '1'], notes: ['x', 'Eb3', 'Bb3', 'Eb4', 'G4', 'Bb4'], baseFret: 6 },
+  'Eb': { frets: [-1, 6, 8, 8, 8, 6], fingers: ['x', '1', '2', '3', '4', '1'], notes: ['x', 'Eb3', 'Bb3', 'Eb4', 'G4', 'Bb4'], baseFret: 6 },
+  'E': { frets: [0, 2, 2, 1, 0, 0], fingers: ['0', '2', '3', '1', '0', '0'], notes: ['E2', 'B2', 'E3', 'G#3', 'B3', 'E4'], baseFret: 1 },
+  'F': { frets: [1, 3, 3, 2, 1, 1], fingers: ['1', '3', '4', '2', '1', '1'], notes: ['F2', 'C3', 'F3', 'A3', 'C4', 'F4'], baseFret: 1 },
+  'F#': { frets: [2, 4, 4, 3, 2, 2], fingers: ['1', '3', '4', '2', '1', '1'], notes: ['F#2', 'C#3', 'F#3', 'A#3', 'C#4', 'F#4'], baseFret: 2 },
+  'Gb': { frets: [2, 4, 4, 3, 2, 2], fingers: ['1', '3', '4', '2', '1', '1'], notes: ['Gb2', 'Db3', 'Gb3', 'Bb3', 'Db4', 'Gb4'], baseFret: 2 },
+  'G': { frets: [3, 2, 0, 0, 0, 3], fingers: ['2', '1', '0', '0', '0', '3'], notes: ['G2', 'B2', 'D3', 'G3', 'B3', 'G4'], baseFret: 1 },
+  'G#': { frets: [4, 6, 6, 5, 4, 4], fingers: ['1', '3', '4', '2', '1', '1'], notes: ['Ab2', 'Eb3', 'Ab3', 'C4', 'Eb4', 'Ab4'], baseFret: 4 },
+  'Ab': { frets: [4, 6, 6, 5, 4, 4], fingers: ['1', '3', '4', '2', '1', '1'], notes: ['Ab2', 'Eb3', 'Ab3', 'C4', 'Eb4', 'Ab4'], baseFret: 4 },
+  'A': { frets: [-1, 0, 2, 2, 2, 0], fingers: ['x', '0', '1', '2', '3', '0'], notes: ['x', 'A2', 'E3', 'A3', 'C#4', 'E4'], baseFret: 1 },
+  'A#': { frets: [-1, 1, 3, 3, 3, 1], fingers: ['x', '1', '2', '3', '4', '1'], notes: ['x', 'Bb2', 'F3', 'Bb3', 'D4', 'F4'], baseFret: 1 },
+  'Bb': { frets: [-1, 1, 3, 3, 3, 1], fingers: ['x', '1', '2', '3', '4', '1'], notes: ['x', 'Bb2', 'F3', 'Bb3', 'D4', 'F4'], baseFret: 1 },
+  'B': { frets: [-1, 2, 4, 4, 4, 2], fingers: ['x', '1', '2', '3', '4', '1'], notes: ['x', 'B2', 'F#3', 'B3', 'D#4', 'F#4'], baseFret: 2 },
+
+  // Minors
+  'Cm': { frets: [-1, 3, 5, 5, 4, 3], fingers: ['x', '1', '3', '4', '2', '1'], notes: ['x', 'C3', 'G3', 'C4', 'Eb4', 'G4'], baseFret: 3 },
+  'C#m': { frets: [-1, 4, 6, 6, 5, 4], fingers: ['x', '1', '3', '4', '2', '1'], notes: ['x', 'C#3', 'G#3', 'C#4', 'E4', 'G#4'], baseFret: 4 },
+  'Dbm': { frets: [-1, 4, 6, 6, 5, 4], fingers: ['x', '1', '3', '4', '2', '1'], notes: ['x', 'Db3', 'Ab3', 'Db4', 'E4', 'Ab4'], baseFret: 4 },
+  'Dm': { frets: [-1, -1, 0, 2, 3, 1], fingers: ['x', 'x', '0', '2', '3', '1'], notes: ['x', 'x', 'D3', 'A3', 'D4', 'F4'], baseFret: 1 },
+  'D#m': { frets: [-1, 6, 8, 8, 7, 6], fingers: ['x', '1', '3', '4', '2', '1'], notes: ['x', 'Eb3', 'Bb3', 'Eb4', 'Gb4', 'Bb4'], baseFret: 6 },
+  'Ebm': { frets: [-1, 6, 8, 8, 7, 6], fingers: ['x', '1', '3', '4', '2', '1'], notes: ['x', 'Eb3', 'Bb3', 'Eb4', 'Gb4', 'Bb4'], baseFret: 6 },
+  'Em': { frets: [0, 2, 2, 0, 0, 0], fingers: ['0', '2', '3', '0', '0', '0'], notes: ['E2', 'B2', 'E3', 'G3', 'B3', 'E4'], baseFret: 1 },
+  'Fm': { frets: [1, 3, 3, 1, 1, 1], fingers: ['1', '3', '4', '1', '1', '1'], notes: ['F2', 'C3', 'F3', 'Ab3', 'C4', 'F4'], baseFret: 1 },
+  'F#m': { frets: [2, 4, 4, 2, 2, 2], fingers: ['1', '3', '4', '1', '1', '1'], notes: ['F#2', 'C#3', 'F#3', 'A3', 'C#4', 'F#4'], baseFret: 2 },
+  'Gbm': { frets: [2, 4, 4, 2, 2, 2], fingers: ['1', '3', '4', '1', '1', '1'], notes: ['Gb2', 'Db3', 'Gb3', 'A3', 'Db4', 'Gb4'], baseFret: 2 },
+  'Gm': { frets: [3, 5, 5, 3, 3, 3], fingers: ['1', '3', '4', '1', '1', '1'], notes: ['G2', 'D3', 'G3', 'Bb3', 'D4', 'G4'], baseFret: 3 },
+  'G#m': { frets: [4, 6, 6, 4, 4, 4], fingers: ['1', '3', '4', '1', '1', '1'], notes: ['Ab2', 'Eb3', 'Ab3', 'B3', 'Eb4', 'Ab4'], baseFret: 4 },
+  'Abm': { frets: [4, 6, 6, 4, 4, 4], fingers: ['1', '3', '4', '1', '1', '1'], notes: ['Ab2', 'Eb3', 'Ab3', 'B3', 'Eb4', 'Ab4'], baseFret: 4 },
+  'Am': { frets: [-1, 0, 2, 2, 1, 0], fingers: ['x', '0', '2', '3', '1', '0'], notes: ['x', 'A2', 'E3', 'A3', 'C4', 'E4'], baseFret: 1 },
+  'A#m': { frets: [-1, 1, 3, 3, 2, 1], fingers: ['x', '1', '3', '4', '2', '1'], notes: ['x', 'Bb2', 'F3', 'Bb3', 'Db4', 'F4'], baseFret: 1 },
+  'Bbm': { frets: [-1, 1, 3, 3, 2, 1], fingers: ['x', '1', '3', '4', '2', '1'], notes: ['x', 'Bb2', 'F3', 'Bb3', 'Db4', 'F4'], baseFret: 1 },
+  'Bm': { frets: [-1, 2, 4, 4, 3, 2], fingers: ['x', '1', '3', '4', '2', '1'], notes: ['x', 'B2', 'F#3', 'B3', 'D4', 'F#4'], baseFret: 2 },
+
+  // Diminished
+  'Bdim': { frets: [-1, 2, 3, 4, 3, -1], fingers: ['x', '1', '2', '4', '3', 'x'], notes: ['x', 'B2', 'F3', 'B3', 'D4', 'x'], baseFret: 2 },
+  'C#dim': { frets: [-1, 4, 5, 6, 5, -1], fingers: ['x', '1', '2', '4', '3', 'x'], notes: ['x', 'C#3', 'G3', 'C#4', 'E4', 'x'], baseFret: 4 },
+  'Dbdim': { frets: [-1, 4, 5, 6, 5, -1], fingers: ['x', '1', '2', '4', '3', 'x'], notes: ['x', 'Db3', 'G3', 'Db4', 'E4', 'x'], baseFret: 4 },
+  'Ddim': { frets: [-1, -1, 0, 1, 3, 1], fingers: ['x', 'x', '0', '1', '3', '2'], notes: ['x', 'x', 'D3', 'Ab3', 'D4', 'F4'], baseFret: 1 },
+  'D#dim': { frets: [-1, -1, 1, 2, 4, 2], fingers: ['x', 'x', '1', '2', '4', '3'], notes: ['x', 'x', 'Eb3', 'A3', 'Eb4', 'Gb4'], baseFret: 1 },
+  'Ebdim': { frets: [-1, -1, 1, 2, 4, 2], fingers: ['x', 'x', '1', '2', '4', '3'], notes: ['x', 'x', 'Eb3', 'A3', 'Eb4', 'Gb4'], baseFret: 1 },
+  'Edim': { frets: [0, 1, 2, 0, -1, -1], fingers: ['0', '1', '2', '0', 'x', 'x'], notes: ['E2', 'Bb2', 'E3', 'G3', 'x', 'x'], baseFret: 1 },
+  'Fdim': { frets: [1, 2, 3, 1, -1, -1], fingers: ['1', '2', '3', '1', 'x', 'x'], notes: ['F2', 'B2', 'F3', 'Ab3', 'x', 'x'], baseFret: 1 },
+  'F#dim': { frets: [2, 3, 4, 2, -1, -1], fingers: ['1', '2', '3', '1', 'x', 'x'], notes: ['F#2', 'C3', 'F#3', 'A3', 'x', 'x'], baseFret: 2 },
+  'Gbdim': { frets: [2, 3, 4, 2, -1, -1], fingers: ['1', '2', '3', '1', 'x', 'x'], notes: ['Gb2', 'C3', 'Gb3', 'A3', 'x', 'x'], baseFret: 2 },
+  'G#dim': { frets: [4, 5, 6, 4, -1, -1], fingers: ['1', '2', '3', '1', 'x', 'x'], notes: ['Ab2', 'D3', 'Ab3', 'B3', 'x', 'x'], baseFret: 4 },
+  'Abdim': { frets: [4, 5, 6, 4, -1, -1], fingers: ['1', '2', '3', '1', 'x', 'x'], notes: ['Ab2', 'D3', 'Ab3', 'B3', 'x', 'x'], baseFret: 4 },
+  'Adim': { frets: [-1, 0, 1, 2, 1, -1], fingers: ['x', '0', '1', '3', '2', 'x'], notes: ['x', 'A2', 'Eb3', 'A3', 'C4', 'x'], baseFret: 1 },
+  'A#dim': { frets: [-1, 1, 2, 3, 2, -1], fingers: ['x', '1', '2', '4', '3', 'x'], notes: ['x', 'Bb2', 'E3', 'Bb3', 'Db4', 'x'], baseFret: 1 },
+  'Bbdim': { frets: [-1, 1, 2, 3, 2, -1], fingers: ['x', '1', '2', '4', '3', 'x'], notes: ['x', 'Bb2', 'E3', 'Bb3', 'Db4', 'x'], baseFret: 1 }
+};
+
+// Retrieve or fallback guitar chord voicing
+export function getGuitarChordVoicing(chordName, quality, triadNotes = []) {
+  const cleanName = chordName.replace('°', 'dim');
+  if (GUITAR_CHORDS_DB[cleanName]) {
+    const data = GUITAR_CHORDS_DB[cleanName];
+    const soundingNotes = data.notes.filter((n) => n !== 'x');
+    return {
+      ...data,
+      soundingNotes
+    };
+  }
+
+  // Fallback to voiced triad notes
+  const fallbackNotes = triadNotes.length > 0 
+    ? [
+        `${triadNotes[0]}3`, 
+        `${triadNotes[1] || triadNotes[0]}3`, 
+        `${triadNotes[2] || triadNotes[0]}3`, 
+        `${triadNotes[0]}4`, 
+        `${triadNotes[1] || triadNotes[0]}4`
+      ]
+    : ['C3', 'E3', 'G3', 'C4', 'E4'];
+
+  return {
+    frets: [-1, 0, 2, 2, 1, 0],
+    fingers: ['x', '0', '2', '3', '1', '0'],
+    notes: ['x', fallbackNotes[0], fallbackNotes[1], fallbackNotes[2], fallbackNotes[3], fallbackNotes[4]],
+    baseFret: 1,
+    soundingNotes: fallbackNotes
+  };
+}
+
+// Strumming Rhythm Patterns
+export const STRUMMING_PATTERNS = [
+  {
+    id: 'island',
+    name: 'Island / Pop Strum',
+    description: 'Campfire classic: Down - Down Up - Up Down Up',
+    timeSignature: '4/4',
+    pattern: ['D', null, 'D', 'U', null, 'U', 'D', 'U'],
+    labels: ['1', '&', '2', '&', '3', '&', '4', '&'],
+    genre: 'Pop, Indie, Folk'
+  },
+  {
+    id: 'campfire',
+    name: 'Acoustic Folk 4/4',
+    description: 'Quarter downstrokes with driving syncopated eighths',
+    timeSignature: '4/4',
+    pattern: ['D', null, 'D', null, 'D', 'U', 'D', 'U'],
+    labels: ['1', '&', '2', '&', '3', '&', '4', '&'],
+    genre: 'Folk, Acoustic'
+  },
+  {
+    id: 'rock-pulse',
+    name: 'Driving 8-Beat',
+    description: 'Continuous alternating down and up rhythm',
+    timeSignature: '4/4',
+    pattern: ['D', 'U', 'D', 'U', 'D', 'U', 'D', 'U'],
+    labels: ['1', '&', '2', '&', '3', '&', '4', '&'],
+    genre: 'Rock, Pop-Rock'
+  },
+  {
+    id: 'waltz',
+    name: 'Folk 3/4 Waltz',
+    description: 'Boom-chick-chick waltz rhythm for triple meter',
+    timeSignature: '3/4',
+    pattern: ['D', null, 'D', 'U', 'D', 'U'],
+    labels: ['1', '&', '2', '&', '3', '&'],
+    genre: 'Waltz, Ballad'
+  }
+];
+

@@ -1,6 +1,6 @@
 /* ==========================================================================
-   ChordVerse Application Stylesheet
-   Luxury Glassmorphism & Musical Neon Design System
+   Project Music Application Stylesheet
+   Luxury Glassmorphism & Studio Dark Design System
    ========================================================================== */
 
 /* Layout */
@@ -2520,3 +2520,1457 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* ==========================================================================
+   Shared Utilities & Inline Icon Alignments
+   ========================================================================== */
+.inline-icon {
+  display: inline-block;
+  vertical-align: -2px;
+  margin-right: 0.35rem;
+}
+
+.footer-badge-clean {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+}
+
+.chords-top-selectors {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.instrument-pick-box {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+/* ==========================================================================
+   Guitar Strummer & Fretboard Lab
+   ========================================================================== */
+.guitar-strummer-page {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.guitar-global-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.strum-slider {
+  width: 130px;
+  accent-color: var(--accent-emerald);
+  cursor: pointer;
+}
+
+/* Chord Bar */
+.guitar-chord-bar {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.chord-bar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bar-label {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.bar-sub {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.guitar-chords-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.75rem;
+}
+
+.guitar-chord-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 0.85rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.guitar-chord-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--degree-color, var(--accent-blue));
+  transform: translateY(-2px);
+}
+
+.guitar-chord-btn.active {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--degree-color, var(--accent-emerald));
+  box-shadow: 0 0 16px var(--degree-glow, rgba(16, 185, 129, 0.3));
+}
+
+.gc-degree {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--degree-color, var(--accent-emerald));
+}
+
+.gc-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.gc-roman {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* Strum Stage Layout */
+.strum-stage-layout {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 1.75rem;
+}
+
+.guitar-body-card {
+  background: linear-gradient(145deg, #131b2a, #0a0e17);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.stage-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.current-chord-badge {
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+}
+
+.badge-deg {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--accent-emerald);
+  background: rgba(16, 185, 129, 0.15);
+  padding: 0.2rem 0.6rem;
+  border-radius: 8px;
+}
+
+.badge-title {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.badge-sub {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.strum-action-buttons {
+  display: flex;
+  gap: 0.65rem;
+}
+
+.strum-trigger-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.65rem 1.15rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid transparent;
+}
+
+.strum-trigger-btn.down {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.35);
+}
+
+.strum-trigger-btn.down:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.strum-trigger-btn.up {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.35);
+}
+
+.strum-trigger-btn.up:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* Guitar Strings Visualizer */
+.guitar-strings-box {
+  background: #090d15;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 1.5rem 1rem;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.strings-fret-nut {
+  position: absolute;
+  left: 140px;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background: #475569;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.strings-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1.15rem;
+}
+
+.guitar-string-row {
+  display: grid;
+  grid-template-columns: 120px 1fr 140px;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  padding: 0.35rem 0.5rem;
+  border-radius: 8px;
+  transition: background 0.15s ease;
+}
+
+.guitar-string-row:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.guitar-string-row.muted-string {
+  opacity: 0.45;
+}
+
+.string-info-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.string-num {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.tuning-name {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.string-wire-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 24px;
+}
+
+.string-wire {
+  width: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #94a3b8, #cbd5e1, #94a3b8);
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.25);
+  transition: transform 0.08s ease;
+}
+
+.guitar-string-row.vibrating .string-wire {
+  animation: stringVibrate 0.18s ease-in-out infinite;
+  background: linear-gradient(90deg, #10b981, #34d399, #10b981);
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.8);
+}
+
+@keyframes stringVibrate {
+  0% { transform: translateY(0); }
+  25% { transform: translateY(-3px); }
+  75% { transform: translateY(3px); }
+  100% { transform: translateY(0); }
+}
+
+.string-fret-tag {
+  text-align: right;
+}
+
+.fret-pill {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+.fret-pill.open {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.fret-pill.fretted {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.fret-pill.muted {
+  background: rgba(239, 68, 68, 0.12);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* Sweep strip */
+.strum-sweep-strip {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 0.85rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.strum-sweep-strip:hover {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: var(--accent-emerald);
+  color: #fff;
+}
+
+/* Guitar Side Column */
+.guitar-side-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.chord-diagram-card, .strum-pattern-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.card-header-compact {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.card-header-compact h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.diagram-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.voicing-fret-summary, .chord-notes-breakdown {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.summary-title {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.frets-readout {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.fret-indicator {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 800;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+
+.fret-indicator.muted {
+  color: var(--accent-rose);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.fret-indicator.open {
+  color: var(--accent-emerald);
+  background: rgba(16, 185, 129, 0.12);
+}
+
+.fret-indicator.fretted {
+  color: var(--accent-blue);
+  background: rgba(59, 130, 246, 0.12);
+}
+
+.notes-chips {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.guitar-note-chip {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  color: #fff;
+}
+
+.voicing-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 10px;
+  padding: 0.75rem 0.95rem;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+/* Strum Pattern Card */
+.pattern-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-title-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header-title-box h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.pattern-tempo-box {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent-emerald);
+  background: rgba(16, 185, 129, 0.12);
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+}
+
+.patterns-picker {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.pat-pill {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.pat-pill:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.pat-pill.active {
+  background: var(--accent-emerald);
+  color: #000;
+  font-weight: 700;
+  border-color: var(--accent-emerald);
+}
+
+.pattern-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 0.35rem;
+}
+
+.pattern-step-cell {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 0.5rem 0.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.15s ease;
+}
+
+.pattern-step-cell.step-active {
+  background: rgba(16, 185, 129, 0.25);
+  border-color: var(--accent-emerald);
+  transform: scale(1.05);
+}
+
+.step-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.stroke-arrow.down {
+  color: var(--accent-emerald);
+}
+
+.stroke-arrow.up {
+  color: var(--accent-blue);
+}
+
+.rest-dash {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.pattern-controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.pattern-play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+  font-weight: 700;
+  padding: 0.65rem 1.25rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pattern-play-btn.playing {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+/* ==========================================================================
+   Beat Maker & Groovebox
+   ========================================================================== */
+.beat-maker-page {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.beat-global-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.preset-selector-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.presets-pill-group {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.preset-pill-btn {
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.preset-pill-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.preset-pill-btn.active {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #fff;
+  border-color: #3b82f6;
+  font-weight: 700;
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.35);
+}
+
+.sequencer-board-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+}
+
+.sequencer-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.transport-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.transport-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 800;
+  padding: 0.7rem 1.4rem;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 18px rgba(16, 185, 129, 0.4);
+  transition: all 0.2s ease;
+}
+
+.transport-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.transport-btn.playing {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  box-shadow: 0 0 18px rgba(239, 68, 68, 0.4);
+}
+
+.toolbar-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.65rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.toolbar-action-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.toolbar-action-btn.danger:hover {
+  border-color: var(--accent-rose);
+  color: var(--accent-rose);
+}
+
+.tempo-control-box {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle);
+}
+
+.tempo-display {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.tempo-val {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.tempo-unit {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.bpm-slider {
+  width: 120px;
+  accent-color: var(--accent-blue);
+  cursor: pointer;
+}
+
+.tempo-fine-btns {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.fine-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.45rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.fine-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Sequencer Headers & Grid */
+.step-column-headers {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 1rem;
+  padding-bottom: 0.35rem;
+}
+
+.steps-header-grid {
+  display: grid;
+  grid-template-columns: repeat(16, 1fr);
+  gap: 0.35rem;
+}
+
+.step-header-cell {
+  text-align: center;
+  position: relative;
+  padding-bottom: 0.25rem;
+}
+
+.step-num-text {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.step-header-cell.quarter-downbeat .step-num-text {
+  color: var(--text-primary);
+  font-weight: 800;
+}
+
+.step-header-cell.active-header .step-num-text {
+  color: var(--accent-emerald);
+}
+
+.playhead-indicator-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--accent-emerald);
+  margin: 2px auto 0;
+  box-shadow: 0 0 8px var(--accent-emerald);
+}
+
+.sequencer-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.sequencer-track-row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sequencer-track-row.track-muted {
+  opacity: 0.45;
+}
+
+.track-info {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 0.45rem 0.65rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+}
+
+.track-color-indicator {
+  width: 4px;
+  height: 28px;
+  border-radius: 999px;
+}
+
+.track-names {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.track-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.track-short {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.track-mute-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 6px;
+  transition: color 0.15s ease;
+}
+
+.track-mute-btn:hover {
+  color: #fff;
+}
+
+.track-mute-btn.muted {
+  color: var(--accent-rose);
+}
+
+.track-steps-row {
+  display: grid;
+  grid-template-columns: repeat(16, 1fr);
+  gap: 0.35rem;
+}
+
+.sequencer-step-btn {
+  height: 44px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.1s ease;
+}
+
+.sequencer-step-btn.measure-start {
+  border-left-color: rgba(255, 255, 255, 0.2);
+}
+
+.sequencer-step-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.02);
+}
+
+.sequencer-step-btn.active-step {
+  background: var(--track-color, var(--accent-blue));
+  border-color: var(--track-color, var(--accent-blue));
+  box-shadow: 0 0 12px var(--track-color, rgba(59, 130, 246, 0.4));
+}
+
+.sequencer-step-btn.playhead-active {
+  outline: 2px solid #fff;
+  outline-offset: 1px;
+}
+
+/* Jam Along Card */
+.beat-jam-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.jam-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.jam-title-box {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.jam-title-box h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+}
+
+.jam-instrument-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.toggle-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.jam-subtitle {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.jam-chords-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.75rem;
+}
+
+.jam-chord-pad {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 1rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.jam-chord-pad:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--degree-color, var(--accent-emerald));
+  transform: translateY(-2px);
+}
+
+.jam-chord-pad.jamming {
+  background: var(--degree-color, var(--accent-emerald));
+  color: #000;
+  box-shadow: 0 0 20px var(--degree-glow, rgba(16, 185, 129, 0.5));
+  transform: scale(0.98);
+}
+
+.jam-chord-pad.jamming * {
+  color: #000;
+}
+
+.jam-degree-num {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--degree-color, var(--accent-emerald));
+}
+
+.jam-chord-name {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #fff;
+}
+
+.jam-roman {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.jam-family-tag {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+/* ==========================================================================
+   Studio Metronome
+   ========================================================================== */
+.metronome-page {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.metronome-main-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 2rem;
+}
+
+.metronome-visual-card {
+  background: linear-gradient(145deg, #131b2a, #0a0e17);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 2.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+}
+
+.tempo-term-badge {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+}
+
+.term-text {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--accent-emerald);
+}
+
+.term-sub {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.bpm-hero-display {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.bpm-hero-number {
+  font-family: var(--font-mono);
+  font-size: 5rem;
+  font-weight: 900;
+  line-height: 1;
+  color: #fff;
+  letter-spacing: -0.04em;
+}
+
+.bpm-hero-label {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--accent-emerald);
+}
+
+/* Pendulum */
+.pendulum-container {
+  width: 140px;
+  height: 140px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.pendulum-arm {
+  width: 4px;
+  height: 110px;
+  background: linear-gradient(180deg, #64748b, #94a3b8);
+  position: absolute;
+  top: 10px;
+  transform-origin: top center;
+  border-radius: 999px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+}
+
+.pendulum-weight {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  position: absolute;
+  bottom: 0;
+  left: -9px;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.6);
+}
+
+.pendulum-base {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: #334155;
+  position: absolute;
+  top: 0;
+}
+
+/* Beat LED Strip */
+.beat-led-strip {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.beat-led {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.08s ease;
+}
+
+.led-num {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-secondary);
+}
+
+.beat-led.active {
+  background: var(--accent-blue);
+  border-color: #fff;
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.7);
+}
+
+.beat-led.active .led-num {
+  color: #fff;
+}
+
+.beat-led.active.accent {
+  background: var(--accent-emerald);
+  box-shadow: 0 0 24px rgba(16, 185, 129, 0.85);
+}
+
+.metronome-start-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 800;
+  padding: 0.95rem 2rem;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.4);
+  transition: all 0.2s ease;
+}
+
+.metronome-start-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+.metronome-start-btn.running {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.4);
+}
+
+/* Metronome Controls Column */
+.metronome-controls-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.ctrl-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 18px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.card-top {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.card-top h3 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.slider-wrapper {
+  padding: 0.5rem 0;
+}
+
+.tempo-large-slider {
+  width: 100%;
+  height: 8px;
+  accent-color: var(--accent-emerald);
+  cursor: pointer;
+}
+
+.step-btns-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.step-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 0.6rem 0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.step-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.tap-tempo-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tap-tempo-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--accent-emerald);
+}
+
+.tap-tempo-btn:active {
+  transform: scale(0.98);
+}
+
+.setting-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.setting-row.toggle-row {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.setting-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.pill-options {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.setting-pill {
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.4rem 0.85rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.setting-pill:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.setting-pill.active {
+  background: var(--accent-emerald);
+  color: #000;
+  font-weight: 800;
+  border-color: var(--accent-emerald);
+}
+
+.toggle-switch-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toggle-switch-btn.active {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: var(--accent-emerald);
+  color: var(--accent-emerald);
+}
+
+.sound-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.55rem;
+}
+
+.sound-option-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  padding: 0.65rem 0.85rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+
+.sound-option-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.sound-option-btn.active {
+  background: rgba(59, 130, 246, 0.18);
+  border-color: var(--accent-blue);
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Responsive tweaks for new components */
+@media (max-width: 992px) {
+  .strum-stage-layout, .metronome-main-layout {
+    grid-template-columns: 1fr;
+  }
+  .guitar-chords-row, .jam-chords-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .guitar-chords-row, .jam-chords-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .track-steps-row, .steps-header-grid {
+    gap: 0.2rem;
+  }
+  .sequencer-step-btn {
+    height: 36px;
+  }
+  .step-column-headers, .sequencer-track-row {
+    grid-template-columns: 100px 1fr;
+  }
+}
+

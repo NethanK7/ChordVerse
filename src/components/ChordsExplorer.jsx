@@ -2,12 +2,8 @@ import React, { useState } from 'react';
 import { 
   Play, 
   Volume2, 
-  Music, 
-  Info, 
-  Sparkles, 
-  Disc,
-  ArrowRight,
-  ChevronRight
+  Music,
+  ArrowRight
 } from 'lucide-react';
 import { audio } from '../utils/audio';
 import { getChordsInKey, getScaleNotes } from '../utils/musicTheory';
@@ -18,16 +14,21 @@ export default function ChordsExplorer({ currentKey, setActiveTab }) {
   const scaleNotes = getScaleNotes(currentKey);
   const [selectedChordIndex, setSelectedChordIndex] = useState(0);
   const [voicingMode, setVoicingMode] = useState('strum'); // 'strum' | 'arpeggio' | 'block'
+  const [instrument, setInstrument] = useState('guitar'); // 'guitar' | 'piano'
 
   const selectedChord = chords[selectedChordIndex];
 
   const handlePlayChord = (chord, mode = voicingMode) => {
-    audio.playChord(chord.triadNotes, mode, 2.0, 4);
+    audio.playChord(chord.triadNotes, mode, 2.0, 4, instrument);
   };
 
   const handlePlaySingleNote = (note, e) => {
     e.stopPropagation();
-    audio.playNote(`${note}4`, 1.2, 0, 0.85);
+    if (instrument === 'guitar') {
+      audio.playGuitarString(`${note}4`, 1.8, 0, 0.85);
+    } else {
+      audio.playNote(`${note}4`, 1.2, 0, 0.85);
+    }
   };
 
   return (
@@ -42,28 +43,48 @@ export default function ChordsExplorer({ currentKey, setActiveTab }) {
           </p>
         </div>
 
-        {/* Voicing Mode Selector */}
-        <div className="voicing-control-box">
-          <span className="control-label">Voicing Style:</span>
-          <div className="btn-group">
-            <button 
-              className={`segmented-btn ${voicingMode === 'strum' ? 'active' : ''}`}
-              onClick={() => setVoicingMode('strum')}
-            >
-              Strum
-            </button>
-            <button 
-              className={`segmented-btn ${voicingMode === 'arpeggio' ? 'active' : ''}`}
-              onClick={() => setVoicingMode('arpeggio')}
-            >
-              Arpeggio
-            </button>
-            <button 
-              className={`segmented-btn ${voicingMode === 'block' ? 'active' : ''}`}
-              onClick={() => setVoicingMode('block')}
-            >
-              Block
-            </button>
+        {/* Instrument & Voicing Mode Selector */}
+        <div className="chords-top-selectors">
+          <div className="voicing-control-box">
+            <span className="control-label">Instrument:</span>
+            <div className="btn-group">
+              <button 
+                className={`segmented-btn ${instrument === 'guitar' ? 'active' : ''}`}
+                onClick={() => setInstrument('guitar')}
+              >
+                Acoustic Guitar
+              </button>
+              <button 
+                className={`segmented-btn ${instrument === 'piano' ? 'active' : ''}`}
+                onClick={() => setInstrument('piano')}
+              >
+                Rhodes Piano
+              </button>
+            </div>
+          </div>
+
+          <div className="voicing-control-box">
+            <span className="control-label">Voicing Style:</span>
+            <div className="btn-group">
+              <button 
+                className={`segmented-btn ${voicingMode === 'strum' ? 'active' : ''}`}
+                onClick={() => setVoicingMode('strum')}
+              >
+                Strum
+              </button>
+              <button 
+                className={`segmented-btn ${voicingMode === 'arpeggio' ? 'active' : ''}`}
+                onClick={() => setVoicingMode('arpeggio')}
+              >
+                Arpeggio
+              </button>
+              <button 
+                className={`segmented-btn ${voicingMode === 'block' ? 'active' : ''}`}
+                onClick={() => setVoicingMode('block')}
+              >
+                Block
+              </button>
+            </div>
           </div>
         </div>
       </div>

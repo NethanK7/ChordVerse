@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import TheoryLesson from './components/TheoryLesson';
 import ChordsExplorer from './components/ChordsExplorer';
+import GuitarStrummer from './components/GuitarStrummer';
+import BeatMaker from './components/BeatMaker';
+import Metronome from './components/Metronome';
 import ChordFamiliesView from './components/ChordFamiliesView';
 import ProgressionPlayground from './components/ProgressionPlayground';
 import QuizModule from './components/QuizModule';
-import { HelpCircle } from 'lucide-react';
+import { HelpCircle, Sparkles } from 'lucide-react';
 import './App.css';
 
 export default function App() {
@@ -42,6 +45,24 @@ export default function App() {
             />
           )}
 
+          {activeTab === 'guitar' && (
+            <GuitarStrummer
+              currentKey={currentKey}
+              setActiveTab={setActiveTab}
+            />
+          )}
+
+          {activeTab === 'beats' && (
+            <BeatMaker
+              currentKey={currentKey}
+              setActiveTab={setActiveTab}
+            />
+          )}
+
+          {activeTab === 'metronome' && (
+            <Metronome />
+          )}
+
           {activeTab === 'families' && (
             <ChordFamiliesView
               currentKey={currentKey}
@@ -68,9 +89,9 @@ export default function App() {
       <footer className="app-footer">
         <div className="footer-container">
           <div className="footer-left">
-            <span className="footer-brand">ChordVerse</span>
+            <span className="footer-brand">Project Music</span>
             <span className="footer-dot">•</span>
-            <span>Mastering the 1–7 Nashville & Roman Number System</span>
+            <span>Interactive Theory, Guitar Strums, Beats & Metronome</span>
           </div>
 
           <div className="footer-center">
@@ -83,7 +104,9 @@ export default function App() {
           </div>
 
           <div className="footer-right">
-            <span>Ready to host on <strong>Vercel</strong> 🚀</span>
+            <span className="footer-badge-clean">
+              <Sparkles size={14} className="text-emerald" /> Studio Ready
+            </span>
           </div>
         </div>
       </footer>

@@ -5,15 +5,12 @@ import {
   RotateCcw, 
   Plus, 
   Trash2, 
-  Sparkles, 
-  Sliders, 
-  Music,
-  CheckCircle2
+  Music
 } from 'lucide-react';
 import { audio } from '../utils/audio';
 import { FAMOUS_PROGRESSIONS, getChordsInKey } from '../utils/musicTheory';
 
-export default function ProgressionPlayground({ currentKey, setActiveTab }) {
+export default function ProgressionPlayground({ currentKey }) {
   const chords = getChordsInKey(currentKey);
   const [selectedPresetId, setSelectedPresetId] = useState('pop-axis');
   const [customProgression, setCustomProgression] = useState([1, 5, 6, 4]);
@@ -22,10 +19,16 @@ export default function ProgressionPlayground({ currentKey, setActiveTab }) {
   const [bpm, setBpm] = useState(105);
   const [voicing, setVoicing] = useState('strum');
   const [loopMode, setLoopMode] = useState(true);
+  const [instrument, setInstrument] = useState('guitar'); // 'guitar' | 'piano'
 
   const loopTimerRef = useRef(null);
   const activeStepRef = useRef(0);
   const isPlayingRef = useRef(false);
+  const instrumentRef = useRef(instrument);
+
+  useEffect(() => {
+    instrumentRef.current = instrument;
+  }, [instrument]);
 
   // Sync ref
   useEffect(() => {
@@ -88,7 +91,7 @@ export default function ProgressionPlayground({ currentKey, setActiveTab }) {
 
     if (chord) {
       const stepDurationSec = (60 / bpm) * 2; // 2 beats per chord
-      audio.playChord(chord.triadNotes, voicing, stepDurationSec * 0.95, 4);
+      audio.playChord(chord.triadNotes, voicing, stepDurationSec * 0.95, 4, instrumentRef.current);
     }
 
     const nextStep = step + 1;
@@ -189,7 +192,7 @@ export default function ProgressionPlayground({ currentKey, setActiveTab }) {
               <span className="ex-title">Famous Tracks:</span>
               <div className="ex-tags">
                 {activePreset.examples.map((ex, i) => (
-                  <span key={i} className="ex-chip">🎵 {ex}</span>
+                  <span key={i} className="ex-chip"><Music size={12} className="inline-icon" /> {ex}</span>
                 ))}
               </div>
             </div>
@@ -217,6 +220,25 @@ export default function ProgressionPlayground({ currentKey, setActiveTab }) {
             >
               <RotateCcw size={16} /> Loop {loopMode ? 'ON' : 'OFF'}
             </button>
+          </div>
+
+          {/* Instrument Toggle */}
+          <div className="instrument-pick-box">
+            <span className="slider-label">Instrument:</span>
+            <div className="btn-group">
+              <button
+                className={`segmented-btn ${instrument === 'guitar' ? 'active' : ''}`}
+                onClick={() => setInstrument('guitar')}
+              >
+                Guitar
+              </button>
+              <button
+                className={`segmented-btn ${instrument === 'piano' ? 'active' : ''}`}
+                onClick={() => setInstrument('piano')}
+              >
+                Piano
+              </button>
+            </div>
           </div>
 
           {/* Tempo & Voicing Controls */}

@@ -5,16 +5,19 @@ import {
   Flame, 
   Play, 
   ArrowRight, 
-  RotateCcw,
-  Sparkles,
-  Info,
-  CheckCircle2,
-  Volume2
+  Sparkles, 
+  Volume2,
+  Home,
+  Zap,
+  Star,
+  Cloud,
+  Music2,
+  AlertCircle
 } from 'lucide-react';
 import { audio } from '../utils/audio';
-import { getChordsInKey, CHORD_FAMILIES } from '../utils/musicTheory';
+import { getChordsInKey } from '../utils/musicTheory';
 
-export default function ChordFamiliesView({ currentKey, setActiveTab }) {
+export default function ChordFamiliesView({ currentKey }) {
   const chords = getChordsInKey(currentKey);
   const [isPlayingCycle, setIsPlayingCycle] = useState(false);
   const [activeCycleStep, setActiveCycleStep] = useState(null);
@@ -24,52 +27,55 @@ export default function ChordFamiliesView({ currentKey, setActiveTab }) {
   const subdomChords = chords.filter((c) => c.familyKey === 'subdominant');
   const dominantChords = chords.filter((c) => c.familyKey === 'dominant');
 
-  const playSingleChord = (chord) => {
-    audio.playChord(chord.triadNotes, 'strum', 1.8, 4);
-  };
-
-  // Play a full harmonic sequence (Home -> Journey -> Tension -> Resolution)
-  const playHarmonicJourney = (degrees = [1, 4, 5, 1], label = 'Classic Journey') => {
+  // Play a full harmonic cycle
+  const playHarmonicJourney = (degreeSequence) => {
     if (isPlayingCycle) return;
     setIsPlayingCycle(true);
-    audio.init();
 
-    const sequence = degrees.map((deg) => chords.find((c) => c.degree === deg));
+    const stepDuration = 1.4; // seconds per chord
 
-    sequence.forEach((chord, i) => {
+    degreeSequence.forEach((deg, index) => {
       setTimeout(() => {
-        setActiveCycleStep(chord.degree);
-        audio.playChord(chord.triadNotes, 'strum', 1.6, 4);
-      }, i * 1400);
+        setActiveCycleStep(deg);
+        const chord = chords.find((c) => c.degree === deg);
+        if (chord) {
+          audio.playChord(chord.triadNotes, 'strum', 1.8, 4);
+        }
+      }, index * (stepDuration * 1000));
     });
 
+    // Reset after sequence completes
     setTimeout(() => {
       setIsPlayingCycle(false);
       setActiveCycleStep(null);
-    }, sequence.length * 1400 + 400);
+    }, degreeSequence.length * (stepDuration * 1000));
+  };
+
+  const playSingleChord = (chord) => {
+    audio.playChord(chord.triadNotes, 'strum', 1.8, 4);
   };
 
   return (
     <div className="chord-families-page">
       {/* Header */}
       <div className="section-header">
-        <span className="section-badge">Harmonic Function</span>
-        <h1 className="section-title">
-          The 3 Chord Families of <span className="key-highlight">{currentKey} Major</span>
-        </h1>
-        <p className="section-subtitle">
-          Chords aren't random. Every chord belongs to an emotional family that dictates musical storytelling: 
-          <strong> Home (Tonic)</strong>, <strong>Journey (Subdominant)</strong>, and <strong>Tension (Dominant)</strong>.
-        </p>
+        <div className="header-meta">
+          <span className="section-badge">Harmonic Function</span>
+          <h1 className="section-title">The 3 Chord Families: Tension & Release</h1>
+          <p className="section-subtitle">
+            All music is a journey between Home (Tonic), The Journey (Subdominant), and Tension (Dominant). When you know what family a chord belongs to, songwriting becomes intuitive.
+          </p>
+        </div>
       </div>
 
-      {/* Interactive Harmonic Journey Banner */}
-      <div className="journey-interactive-board">
-        <div className="board-top-row">
-          <div className="board-title-group">
-            <span className="board-tag">Interactive Audio Story</span>
-            <h2>Experience The Universal Harmonic Cycle</h2>
-            <p>Listen to how music travels from stability, to adventure, to climax, and back home:</p>
+      {/* Interactive Tension-Release Simulator */}
+      <div className="journey-simulator-card">
+        <div className="simulator-header">
+          <div>
+            <h2 className="sim-title">Harmonic Journey Simulator</h2>
+            <p className="sim-subtitle">
+              Listen to how harmony travels away from home, peaks in dramatic tension, and resolves cleanly:
+            </p>
           </div>
 
           <div className="board-controls">
@@ -78,21 +84,21 @@ export default function ChordFamiliesView({ currentKey, setActiveTab }) {
               disabled={isPlayingCycle}
               className="primary-glow-btn"
             >
-              <Play size={18} fill="currentColor" /> Play Classic Cycle (1 ➔ 4 ➔ 5 ➔ 1)
+              <Play size={18} fill="currentColor" /> Play Classic Cycle (1 → 4 → 5 → 1)
             </button>
             <button
               onClick={() => playHarmonicJourney([1, 2, 5, 1], 'Jazz (1 - 2 - 5 - 1)')}
               disabled={isPlayingCycle}
               className="secondary-glass-btn"
             >
-              <Sparkles size={18} /> Jazz Cadence (1 ➔ 2 ➔ 5 ➔ 1)
+              <Sparkles size={18} /> Jazz Cadence (1 → 2 → 5 → 1)
             </button>
             <button
               onClick={() => playHarmonicJourney([6, 4, 5, 6], 'Minor (6 - 4 - 5 - 6)')}
               disabled={isPlayingCycle}
               className="secondary-glass-btn"
             >
-              <HeartHandshake size={18} /> Emotional Minor (6 ➔ 4 ➔ 5 ➔ 6)
+              <HeartHandshake size={18} /> Emotional Minor (6 → 4 → 5 → 6)
             </button>
           </div>
         </div>
@@ -106,7 +112,7 @@ export default function ChordFamiliesView({ currentKey, setActiveTab }) {
               <span className="stage-family-badge">Tonic Family</span>
             </div>
             <div className="stage-icon-circle">
-              🏡
+              <Home size={26} className="text-emerald" />
             </div>
             <h3 className="stage-title">Home Base</h3>
             <div className="stage-chord-pill">
@@ -128,7 +134,7 @@ export default function ChordFamiliesView({ currentKey, setActiveTab }) {
               <span className="stage-family-badge">Subdominant</span>
             </div>
             <div className="stage-icon-circle">
-              🚗
+              <Compass size={26} className="text-blue" />
             </div>
             <h3 className="stage-title">The Departure</h3>
             <div className="stage-chord-pill">
@@ -150,7 +156,7 @@ export default function ChordFamiliesView({ currentKey, setActiveTab }) {
               <span className="stage-family-badge">Dominant</span>
             </div>
             <div className="stage-icon-circle">
-              🎢
+              <Zap size={26} className="text-amber" />
             </div>
             <h3 className="stage-title">High Tension</h3>
             <div className="stage-chord-pill">
@@ -172,7 +178,7 @@ export default function ChordFamiliesView({ currentKey, setActiveTab }) {
               <span className="stage-family-badge">Tonic Resolution</span>
             </div>
             <div className="stage-icon-circle">
-              ✨
+              <Sparkles size={26} className="text-emerald" />
             </div>
             <h3 className="stage-title">Safe Return</h3>
             <div className="stage-chord-pill">
@@ -185,22 +191,22 @@ export default function ChordFamiliesView({ currentKey, setActiveTab }) {
         </div>
       </div>
 
-      {/* The 3 Families Detailed Columns */}
-      <div className="families-columns-container">
+      {/* 3 Family Columns Breakdown */}
+      <div className="families-columns-grid">
         {/* 1. TONIC FAMILY */}
         <div className="family-column tonic-col">
           <div className="column-header">
             <div className="col-icon tonic-bg">
-              <HeartHandshake size={24} />
+              <Home size={24} />
             </div>
             <div>
-              <span className="col-family-badge">Tonic Family (Home)</span>
+              <span className="col-family-badge">Tonic (Home)</span>
               <h2 className="col-title">Chords 1, 6, and 3</h2>
             </div>
           </div>
 
           <p className="col-summary">
-            The Tonic family represents stability and rest. In any song, landing on these chords provides emotional relief and conclusion.
+            The Tonic family represents stability, rest, and resolution. Whenever you return to a Tonic chord, the musical sentence feels complete.
           </p>
 
           <div className="family-chords-list">
@@ -217,9 +223,21 @@ export default function ChordFamiliesView({ currentKey, setActiveTab }) {
                 </div>
 
                 <div className="item-role-snippet">
-                  {chord.degree === 1 && '⭐ True Home. The center of gravity.'}
-                  {chord.degree === 6 && '💔 Relative minor. Emotional, sad substitute for 1.'}
-                  {chord.degree === 3 && '☁️ Mediant. Gentle, dreamy, peaceful substitute.'}
+                  {chord.degree === 1 && (
+                    <>
+                      <Star size={13} className="inline-icon text-amber" /> True Home. The center of gravity.
+                    </>
+                  )}
+                  {chord.degree === 6 && (
+                    <>
+                      <HeartHandshake size={13} className="inline-icon text-pink" /> Relative minor. Emotional, sad substitute for 1.
+                    </>
+                  )}
+                  {chord.degree === 3 && (
+                    <>
+                      <Cloud size={13} className="inline-icon text-teal" /> Mediant. Gentle, dreamy, peaceful substitute.
+                    </>
+                  )}
                 </div>
 
                 <button
@@ -271,8 +289,16 @@ export default function ChordFamiliesView({ currentKey, setActiveTab }) {
                 </div>
 
                 <div className="item-role-snippet">
-                  {chord.degree === 4 && '🚀 Open road! Uplifting departure from home.'}
-                  {chord.degree === 2 && '🎷 Smooth stepping stone. Pre-dominant jazz favorite.'}
+                  {chord.degree === 4 && (
+                    <>
+                      <Compass size={13} className="inline-icon text-blue" /> Open road! Uplifting departure from home.
+                    </>
+                  )}
+                  {chord.degree === 2 && (
+                    <>
+                      <Music2 size={13} className="inline-icon text-indigo" /> Smooth stepping stone. Pre-dominant jazz favorite.
+                    </>
+                  )}
                 </div>
 
                 <button
@@ -289,7 +315,7 @@ export default function ChordFamiliesView({ currentKey, setActiveTab }) {
           <div className="pro-tip-box">
             <Sparkles size={16} className="text-blue" />
             <span>
-              <strong>The Plagal "Amen" Cadence:</strong> Moving directly from chord 4 to 1 (IV ➔ I) gives the peaceful, sacred "Amen" finish heard in church music and hymns.
+              <strong>The Plagal "Amen" Cadence:</strong> Moving directly from chord 4 to 1 (IV → I) gives the peaceful, sacred "Amen" finish heard in church music and hymns.
             </span>
           </div>
         </div>
@@ -324,8 +350,16 @@ export default function ChordFamiliesView({ currentKey, setActiveTab }) {
                 </div>
 
                 <div className="item-role-snippet">
-                  {chord.degree === 5 && '⚡ The Great Pull. The single most tense diatonic chord.'}
-                  {chord.degree === 7 && '👻 The Tritone Monster. Diminished, unstable, wild tension.'}
+                  {chord.degree === 5 && (
+                    <>
+                      <Zap size={13} className="inline-icon text-amber" /> The Great Pull. The single most tense diatonic chord.
+                    </>
+                  )}
+                  {chord.degree === 7 && (
+                    <>
+                      <AlertCircle size={13} className="inline-icon text-violet" /> The Tritone Monster. Diminished, unstable, wild tension.
+                    </>
+                  )}
                 </div>
 
                 <button
@@ -342,7 +376,7 @@ export default function ChordFamiliesView({ currentKey, setActiveTab }) {
           <div className="pro-tip-box">
             <Sparkles size={16} className="text-amber" />
             <span>
-              <strong>The Perfect Cadence:</strong> Moving from chord 5 to chord 1 (V ➔ I) is the strongest conclusion in all of Western music. 95% of pop anthems end on this!
+              <strong>The Perfect Cadence:</strong> Moving from chord 5 to chord 1 (V → I) is the strongest conclusion in all of Western music. 95% of pop anthems end on this!
             </span>
           </div>
         </div>

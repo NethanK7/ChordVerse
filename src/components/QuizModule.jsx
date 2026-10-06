@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import { 
-  HelpCircle, 
   CheckCircle2, 
   XCircle, 
   Volume2, 
   RotateCcw, 
-  Award, 
   Flame, 
   ArrowRight, 
-  Sparkles,
-  Trophy
+  Trophy 
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { QUIZ_QUESTIONS } from '../utils/musicTheory';
@@ -23,72 +20,69 @@ export default function QuizModule({ setActiveTab }) {
   const [streak, setStreak] = useState(0);
   const [bestStreak, setBestStreak] = useState(0);
   const [quizCompleted, setQuizCompleted] = useState(false);
-  const [userAnswers, setUserAnswers] = useState([]);
 
   const currentQ = QUIZ_QUESTIONS[currentIndex];
 
-  const handlePlayAudioQuestion = () => {
-    if (currentQ?.audioChord) {
-      audio.playChord(currentQ.audioChord.notes, 'strum', 2.0, 4);
+  // Play audio sample for listening questions
+  const handlePlaySample = () => {
+    audio.init();
+    if (currentQ.audioChord) {
+      audio.playChord(currentQ.audioChord, 'strum', 2.2, 4);
     }
   };
 
+  // Select an answer
   const handleSelectOption = (idx) => {
     if (isAnswered) return;
     setSelectedOption(idx);
     setIsAnswered(true);
 
     const isCorrect = idx === currentQ.correctIndex;
-
     if (isCorrect) {
-      // Play celebratory chime
-      audio.playNote('C5', 0.15, 0, 0.6);
-      audio.playNote('E5', 0.15, 0.1, 0.6);
-      audio.playNote('G5', 0.3, 0.2, 0.7);
-
-      setScore((prev) => prev + 1);
+      const newScore = score + 1;
       const newStreak = streak + 1;
+      setScore(newScore);
       setStreak(newStreak);
       if (newStreak > bestStreak) setBestStreak(newStreak);
-    } else {
-      // Gentle low dissonance
-      audio.playNote('F#3', 0.3, 0, 0.5);
-      setStreak(0);
-    }
 
-    setUserAnswers((prev) => [
-      ...prev,
-      {
-        question: currentQ.question,
-        selected: idx,
-        correct: currentQ.correctIndex,
-        isCorrect,
-        explanation: currentQ.explanation
+      // Play soft success chime
+      audio.init();
+      audio.playNote('C5', 0.4, 0, 0.8);
+      audio.playNote('E5', 0.5, 0.1, 0.9);
+
+      // Confetti burst for streaks or final question
+      if (newStreak >= 3 || currentIndex === QUIZ_QUESTIONS.length - 1) {
+        confetti({
+          particleCount: 50,
+          spread: 60,
+          origin: { y: 0.7 }
+        });
       }
-    ]);
+    } else {
+      setStreak(0);
+      audio.init();
+      audio.playNote('F3', 0.5, 0, 0.6);
+    }
   };
 
+  // Next question or finish
   const handleNext = () => {
     if (currentIndex + 1 < QUIZ_QUESTIONS.length) {
       setCurrentIndex((prev) => prev + 1);
       setSelectedOption(null);
       setIsAnswered(false);
     } else {
-      finishQuiz();
+      setQuizCompleted(true);
+      // Big celebratory confetti
+      confetti({
+        particleCount: 120,
+        spread: 100,
+        origin: { y: 0.6 }
+      });
     }
   };
 
-  const finishQuiz = () => {
-    setQuizCompleted(true);
-    // Fire celebratory confetti!
-    confetti({
-      particleCount: 120,
-      spread: 70,
-      origin: { y: 0.6 },
-      colors: ['#10b981', '#3b82f6', '#f59e0b', '#ec4899', '#8b5cf6']
-    });
-  };
-
+  // Reset quiz
   const handleRestart = () => {
     setCurrentIndex(0);
     setSelectedOption(null);
@@ -96,7 +90,6 @@ export default function QuizModule({ setActiveTab }) {
     setScore(0);
     setStreak(0);
     setQuizCompleted(false);
-    setUserAnswers([]);
   };
 
   // Badges based on score
@@ -104,27 +97,27 @@ export default function QuizModule({ setActiveTab }) {
     const percentage = Math.round((scoreTotal / QUIZ_QUESTIONS.length) * 100);
     if (percentage === 100) {
       return {
-        title: 'Harmonic Grandmaster 🏆',
+        title: 'Harmonic Grandmaster',
         color: '#f59e0b',
         desc: 'Flawless score! You have completely mastered scale degrees, diatonic chord qualities, and harmonic families!'
       };
     }
     if (percentage >= 80) {
       return {
-        title: 'Chord Virtuoso 🌟',
+        title: 'Chord Virtuoso',
         color: '#10b981',
         desc: 'Outstanding ears and theory chops! You are ready to analyze and write hit song progressions.'
       };
     }
     if (percentage >= 60) {
       return {
-        title: 'Music Producer in Training 🎧',
+        title: 'Music Producer in Training',
         color: '#3b82f6',
         desc: 'Solid foundation! A quick review of the chord families will push you to expert level.'
       };
     }
     return {
-      title: 'Theory Apprentice 🎼',
+      title: 'Theory Apprentice',
       color: '#ec4899',
       desc: 'Great start! Music theory is a puzzle that clicks with repetition. Review the 1-7 chapter and try again!'
     };
@@ -145,36 +138,40 @@ export default function QuizModule({ setActiveTab }) {
 
             <div className="status-right">
               {streak > 1 && (
-                <div className="streak-badge">
-                  <Flame size={16} className="flame-icon" />
+                <div className="streak-indicator">
+                  <Flame size={16} className="text-amber" />
                   <span>{streak} Streak!</span>
                 </div>
               )}
-              <div className="score-live">
+              <div className="current-score-pill">
                 Score: <strong>{score}</strong>
               </div>
             </div>
           </div>
 
-          {/* Progress bar line */}
-          <div className="progress-bar-track">
+          {/* Progress Line */}
+          <div className="quiz-progress-track">
             <div 
-              className="progress-bar-fill" 
+              className="quiz-progress-bar"
               style={{ width: `${((currentIndex + 1) / QUIZ_QUESTIONS.length) * 100}%` }}
             />
           </div>
 
           {/* Question Text */}
-          <div className="question-body">
-            <h2 className="question-title">{currentQ.question}</h2>
+          <div className="question-content">
+            <h2 className="question-prompt">{currentQ.question}</h2>
 
-            {/* Audio Question Player if applicable */}
-            {currentQ.type === 'audio' && (
-              <div className="audio-prompt-box">
-                <button onClick={handlePlayAudioQuestion} className="play-audio-test-btn">
-                  <Volume2 size={20} /> Click to Play Chord Audio
+            {/* Audio prompt button if this is a listening question */}
+            {currentQ.audioChord && (
+              <div className="listening-prompt-box">
+                <button 
+                  onClick={handlePlaySample} 
+                  className="listen-quiz-btn"
+                  title="Play mystery chord sound"
+                >
+                  <Volume2 size={20} /> Listen to the mystery chord
                 </button>
-                <span className="audio-hint">Listen closely: Does it feel bright/happy (Major) or moody/sad (minor)?</span>
+                <span className="listen-hint">Click to listen, then pick the correct chord degree.</span>
               </div>
             )}
           </div>
@@ -221,9 +218,13 @@ export default function QuizModule({ setActiveTab }) {
             <div className={`explanation-card ${selectedOption === currentQ.correctIndex ? 'exp-correct' : 'exp-wrong'}`}>
               <div className="exp-header">
                 {selectedOption === currentQ.correctIndex ? (
-                  <span className="exp-verdict correct">🎉 Correct!</span>
+                  <span className="exp-verdict correct">
+                    <CheckCircle2 size={16} className="inline-icon" /> Correct!
+                  </span>
                 ) : (
-                  <span className="exp-verdict wrong">❌ Not quite!</span>
+                  <span className="exp-verdict wrong">
+                    <XCircle size={16} className="inline-icon" /> Not quite!
+                  </span>
                 )}
               </div>
               <p className="exp-text">{currentQ.explanation}</p>
@@ -262,7 +263,9 @@ export default function QuizModule({ setActiveTab }) {
             </div>
             <div className="stat-pill">
               <span className="stat-label">Highest Streak</span>
-              <span className="stat-value">🔥 {bestStreak}</span>
+              <span className="stat-value">
+                <Flame size={15} className="inline-icon text-amber" /> {bestStreak}
+              </span>
             </div>
           </div>
 
